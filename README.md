@@ -100,8 +100,7 @@ docker run --name=jenkins-data jenkinsdata
 Create a Dockerfile in a *jenkins-master* directory for the Jenkins runtime.
 ```
 # This is the base image we use to create our image from
-FROM jenkins:1.580.1
-#FROM jenkins:1.651.3
+FROM jenkins:1.651.3
 
 MAINTAINER Nigel Robbins
 
@@ -119,10 +118,6 @@ USER jenkins
 # ...
 # NOTE : Just set pluginID to download latest version of plugin.
 COPY plugins.txt /usr/share/jenkins/plugins.txt
-RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
-
-COPY jenkins.sh /usr/local/bin/jenkins.sh
-COPY jenkins_config_backup.tar.gz /usr/share/jenkins/ref
 
 # Set the default port but allow to be overriden via a build parameter
 ARG HTTP_PORT=8080
@@ -154,7 +149,7 @@ Start using Jenkins in a browser:
 
 ![image](https://user-images.githubusercontent.com/18073204/36062206-23009572-0e5f-11e8-94e0-16c0d89ce32a.png)
 
-Go to **Manage Jenkins** and then **Manage Plugins** where you will see the plugins installed as detailed in plugins.txt.
+Go to **Manage Jenkins** and then **Manage Plugins** where you will see the plugins installed as detailed in *plugins.txt*.
 
 ## Persistent data
 In the Jenkins UI, create a job and build it.
