@@ -24,7 +24,7 @@ vagrant init centos/7
 ```
 My preference is to use a Centos 7 image.
 
-Enable the following in the Vagrantfile:
+Enable the following in the *Vagrantfile*:
 ```
 config.vm.network "forwarded_port", guest: 8080, host: 8080
 config.vm.network "public_network"
@@ -162,7 +162,7 @@ docker run -p 8080:8080 -p 50000:50000 --name=jenkins-master --volumes-from=jenk
 ```
 In the Jenkins UI, you will see the job previously created along with its **Build History**.
 ## Easy upgrade and rollback
-To upgrade Jenkins, simply change the Jenkins version in the Dockerfile and/or the plugins in the plugin,txt and rebuild the image.
+To upgrade Jenkins, simply change the Jenkins version in the Dockerfile and/or the plugins in the *plugin.txt* and rebuild the image.
 
 Then, stop/remove the Jenkins container and start it up again.
 
@@ -174,7 +174,7 @@ Unless you are starting from scratch, it’s likely you’ll already have Jenkin
 
 It’s normal for the Jenkins config to be backed up on a regular basis (e.g. via the *periodic backup* plugin).
 
-The Cloudbees image that is referenced in the *jenkins-master/Dockerfile* uses a *jenkins.sh* script to configure and start up Jenkins. The jenkins.sh script will need to be modified to import your existing Jenkins configuration.
+The Cloudbees image that is referenced in the *jenkins-master/Dockerfile* uses a *jenkins.sh* script to configure and start up Jenkins. The *jenkins.sh* script will need to be modified to import your existing Jenkins configuration.
 
 Copy the script from the container:
 ```
@@ -205,7 +205,7 @@ docker run -p 8080:8080 -p 50000:50000 --name=jenkins-master --volumes-from=jenk
 ```
 Your existing Jenkins config can now be seen in the Jenkins UI.
 
-If required, the Build History of the various jobs can also be imported.
+If required, the **Build History** of the various jobs can also be imported.
 ##	Multiple Jenkins Docker environments
 It is good practice to make changes (e.g. create new jobs, upgrade Jenkins master, add plugins, etc.) in a test environment before rolling into production.
 
@@ -227,7 +227,7 @@ Start the Jenkins test runtime container referencing the Jenkins test data volum
 ```
 docker run -p 9090:9090 --name=jenkins-master-test --volumes-from=jenkins-data-test -d jenkinsmastertest
 ```
-Note that the port will need to be enabled in the Vagrantfile and the image restarted:
+Note that the port will need to be enabled in the *Vagrantfile* and the image restarted:
 ```
 config.vm.network "forwarded_port", guest: 9090, host: 9090
 ```
@@ -297,7 +297,7 @@ Remove the Jenkins master container:
 ```
 docker-compose rm jenkinsmaster
 ```
-The command below will remove all containers (including the data container):
+The command below will remove all containers (including the data container so be aware that any changes will be lost):
 ```
 docker-compose rm
 ```
