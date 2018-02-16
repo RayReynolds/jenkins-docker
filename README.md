@@ -8,7 +8,7 @@ This article details how to convert a standard Jenkins infrastructure into a Doc
 The main benefit of using Docker is for better performance and portability.
 ## Infrastructure
 The following components are used:
-*	Vagrant with Virtual Box on Windows
+*	Vagrant
 *	Docker, Docker Compose
 *	Jenkins
 ## Image
@@ -164,30 +164,30 @@ In the Jenkins UI, you will see the job previously created along with its **Buil
 ## Easy upgrade and rollback
 To upgrade Jenkins, simply change the Jenkins version in the Dockerfile and/or the plugins in the plugin,txt and rebuild the image.
 
-Then, stop/remove the Jenkins container and start up the changed one.
+Then, stop/remove the Jenkins container and start it up again.
 
-To roll back, stop/remove the new container, rebuild the old image and start up the container.
+To roll back, stop/remove the container, rebuild the old image and start up the container.
 
-Alternatively, have a different *jenkins-master* directory/image for a different version (e.g. Jenkins-master-2.1.50).
+Alternatively, have a different *jenkins-master* directory/image for a different version (e.g. *Jenkins-master-2.1.50*).
 ## Importing existing Jenkins config
 Unless you are starting from scratch, it’s likely you’ll already have Jenkins configuration in an existing environment.
 
-It’s normal for the Jenkins config to be backed up on a regular basis (e.g. via the periodic backup plugin).
+It’s normal for the Jenkins config to be backed up on a regular basis (e.g. via the *periodic backup* plugin).
 
-The Cloudbees image that is referenced in the *jenkins-master/Dockerfile* uses a jenkins.sh script to configure and start up Jenkins. The jenkins.sh script will need to be modified to import your existing Jenkins configuration.
+The Cloudbees image that is referenced in the *jenkins-master/Dockerfile* uses a *jenkins.sh* script to configure and start up Jenkins. The jenkins.sh script will need to be modified to import your existing Jenkins configuration.
 
 Copy the script from the container:
 ```
 docker cp jenkins-master:/usr/local/bin/jenkins.sh jenkins-master/jenkins.sh
 ```
-Add the following lines to the script before the "exec java" call:
+Add the following lines to the script before the *exec java* call:
 ```
 cp /usr/share/jenkins/ref/jenkins_config_backup.tar.gz /var/jenkins_home
 cd /var/jenkins_home
 gunzip jenkins_config_backup.tar.gz
 tar -xvf jenkins_config_backup.tar
 ```
-Change the *jenkins-master/Dockerfile* and add the following before the ENV statements:
+Change the *jenkins-master/Dockerfile* and add the following before the *ENV* statements:
 ```
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 COPY jenkins_config_backup.tar.gz /usr/share/jenkins/ref
@@ -205,7 +205,7 @@ docker run -p 8080:8080 -p 50000:50000 --name=jenkins-master --volumes-from=jenk
 ```
 Your existing Jenkins config can now be seen in the Jenkins UI.
 
-If required, the Build History of the various jobs could also be imported.
+If required, the Build History of the various jobs can also be imported.
 ##	Multiple Jenkins Docker environments
 It is good practice to make changes (e.g. create new jobs, upgrade Jenkins master, add plugins, etc.) in a test environment before rolling into production.
 
@@ -219,7 +219,7 @@ docker build --build-arg 'HTTP_PORT=9090' -t jenkinsmastertest jenkins-master-te
 ```
 The same jenkins-data image can be in the test environment.
 
-Start the container:
+Start the container giving it a different name:
 ```
 docker run --name=jenkins-data-test jenkinsdata
 ```
@@ -261,7 +261,7 @@ Install Docker Compose:
 sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
-Create a docker-compose.yml file in the root directory:
+Create a *docker-compose.yml* file in the root directory:
 ```
 jenkinsdata:
   build: jenkins-data
@@ -285,7 +285,7 @@ Show the running containers:
 ```
 docker-compose ps
 ```
-Note that by default, Docker Compose names the images with a prefix based on the parent directory (vagrant in this case).
+Note that by default, Docker Compose names the images with a prefix based on the parent directory (*vagrant* in this case).
 
 ![image](https://user-images.githubusercontent.com/18073204/36062196-efd6a75e-0e5e-11e8-9e42-0f16f2f12185.png)
 
