@@ -5,7 +5,7 @@ This article details how to convert a standard Jenkins infrastructure into a Doc
 *	Existing Jenkins config imported into Docker environment
 *	Multiple Jenkins Docker environments (e.g. production and test) running simultaneously
 
-The main benefit of using Docker is for its small lightweight footprint, better performance and portability.
+The main benefit of using Docker is for its lightweight footprint, better performance and portability.
 ## Infrastructure
 The following components are used:
 *	Vagrant
@@ -112,11 +112,11 @@ RUN chown -R jenkins:jenkins /var/log/jenkins
 RUN chown -R jenkins:jenkins /var/cache/jenkins
 USER jenkins
 
-# Set list of plugins to download / update in plugins.txt like this
+# Set the list of plugins to download/update in plugins.txt like this:
 # pluginID:version
 # periodicbackup:1.3
 # ...
-# NOTE : Just set pluginID to download latest version of plugin.
+# NOTE : Only set pluginID to download latest version of the plugin
 COPY plugins.txt /usr/share/jenkins/plugins.txt
 
 # Set the default port but allow to be overriden via a build parameter
@@ -139,7 +139,7 @@ Run the following:
 ```
 docker ps -a
 ```
-This will show the running jenkins-master container and the stopped jenkins-data container which is expected for data volume containers.
+This will show the running jenkins-master container and the stopped jenkins-data container which is expected for volume containers.
 
 The following command will display the newly created images:
 ```
