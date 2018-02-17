@@ -5,7 +5,7 @@ This article details how to convert a standard Jenkins infrastructure into a Doc
 *	Existing Jenkins config imported into Docker environment
 *	Multiple Jenkins Docker environments (e.g. production and test) running simultaneously
 
-The main benefit of using Docker is for better performance and portability.
+The main benefit of using Docker is for its small lightweight footprint, better performance and portability.
 ## Infrastructure
 The following components are used:
 *	Vagrant
@@ -65,7 +65,7 @@ Show the Docker environment:
 docker info
 ```
 ## Container for Jenkins config
-Create a Dockerfile in a *jenkins-data* directory for the data volume.
+Create a *Dockerfile* in a *jenkins-data* directory for the data volume.
 ```
 # Use the base Debian image because it matches the same base image the Cloudbees Jenkins image uses.
 # Because we’ll be sharing file systems and UID’s across containers we need to match the operating systems.
@@ -97,7 +97,7 @@ Start the Jenkins data volume container:
 docker run --name=jenkins-data jenkinsdata
 ```
 ## Container for Jenkins runtime
-Create a Dockerfile in a *jenkins-master* directory for the Jenkins runtime.
+Create a *Dockerfile* in a *jenkins-master* directory for the Jenkins runtime.
 ```
 # This is the base image we use to create our image from
 FROM jenkins:1.651.3
@@ -207,7 +207,7 @@ Your existing Jenkins config can now be seen in the Jenkins UI.
 
 If required, the **Build History** of the various jobs can also be imported.
 ##	Multiple Jenkins Docker environments
-It is good practice to make changes (e.g. create new jobs, upgrade Jenkins master, add plugins, etc.) in a test environment before rolling into production.
+It is good practice to make changes (e.g. modify/create jobs, upgrade Jenkins master version, add plugins, etc.) in a test environment before rolling into production.
 
 A test environment using a different port can be set up by creating a test master image based on the production:
 ```
