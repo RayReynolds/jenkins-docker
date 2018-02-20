@@ -139,7 +139,7 @@ Run the following:
 ```
 docker ps -a
 ```
-This will show the running jenkins-master container and the stopped jenkins-data container which is expected for volume containers.
+This will show the running *jenkins-master* container and the stopped *jenkins-data* container which is expected for volume containers.
 
 The following command will display the newly created images:
 ```
@@ -154,7 +154,7 @@ Go to **Manage Jenkins** and then **Manage Plugins** where you will see the plug
 ## Persistent data
 In the Jenkins UI, create a job and build it.
 
-Stop/remove the jenkins-master container, then start it up again.
+Stop/remove the *jenkins-master* container, then start it up again.
 ```
 docker stop jenkins-master
 docker rm jenkins-master
@@ -162,7 +162,7 @@ docker run -p 8080:8080 -p 50000:50000 --name=jenkins-master --volumes-from=jenk
 ```
 In the Jenkins UI, you will see the job previously created along with its **Build History**.
 ## Easy upgrade and rollback
-To upgrade Jenkins, simply change the Jenkins version in the Dockerfile and/or the plugins in the *plugin.txt* and rebuild the image.
+To upgrade Jenkins, simply change the Jenkins version in the *Dockerfile* and/or the plugins in the *plugin.txt* and rebuild the image.
 
 Then, stop/remove the Jenkins container and start it up again.
 
@@ -196,7 +196,7 @@ Copy the existing Jenkins config to be imported:
 ```
 cp jenkins_config_backup.tar.gz jenkins-master/jenkins_config_backup.tar.gz
 ```
-Stop/remove the jenkins-master container, rebuild the image, and start up the container.
+Stop/remove the *jenkins-master* container, rebuild the image, and start up the container.
 ```
 docker stop jenkins-master
 docker rm jenkins-master
@@ -213,11 +213,11 @@ A test environment using a different port can be set up by creating a test maste
 ```
 cp -r jenkins-master jenkins-master-test
 ```
-The Dockerfile is set up so that the port can be changed when building the image. For example:
+The *Dockerfile* is set up so that the port can be changed when building the image. For example:
 ```
 docker build --build-arg 'HTTP_PORT=9090' -t jenkinsmastertest jenkins-master-test/.
 ```
-The same jenkins-data image can be in the test environment.
+The same *jenkins-data* image can be in the test environment.
 
 Start the container giving it a different name:
 ```
