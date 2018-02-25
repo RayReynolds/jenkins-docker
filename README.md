@@ -22,7 +22,7 @@ mkdir VagrantImage
 cd VagrantImage
 vagrant init centos/7
 ```
-My preference is to use a Centos 7 image.
+A Centos 7 image is used in this instance.
 
 Enable the following in the *Vagrantfile*:
 ```
