@@ -114,6 +114,7 @@ USER jenkins
 
 # Set the list of plugins to download/update in plugins.txt like this:
 # pluginID:version
+# ec2:1.38
 # periodicbackup:1.3
 # ...
 # NOTE : Only set pluginID to download latest version of the plugin
@@ -168,7 +169,7 @@ Then, stop/remove the Jenkins container and start it up again.
 
 To roll back, stop/remove the container, rebuild the old image and start up the container.
 
-Alternatively, have a different *jenkins-master* directory/image for a different version (e.g. *Jenkins-master-2.1.50*).
+Alternatively, have a different *jenkins-master* directory/image for a different version (e.g. *Jenkins-master-2.60.2*).
 ## Importing existing Jenkins config
 Unless you are starting from scratch, it’s likely you’ll already have Jenkins configuration in an existing environment.
 
